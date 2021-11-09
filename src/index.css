@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(
+      rgba(32, 47, 48, 0.24),
+      rgba(211, 179, 91, 0.185)
+    ),
+    url("./assets/Background.jpg");
+  background-attachment: fixed;
+  width: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -19,6 +19,8 @@ const Questions: React.FC<Props> = ({ user }) => {
     setUserAnswer(event.target.value);
   };
   const handelCheckClicked = () => {
+    console.log(user.id, userAnswer);
+
     chekAnswers(user.id, userAnswer)
       .then((res) => {
         if (res.data[0].userStatus === checkAnswerStatue.APPROVED) {

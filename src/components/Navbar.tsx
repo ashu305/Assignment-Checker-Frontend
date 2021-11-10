@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Navbar: React.FC = () => {
-  const [currentActive, setCurrentActive] = useState("Assignment 1");
+interface Props {
+  currentActive: string;
+  setCurrentActive(value: string): void;
+}
+const Navbar: React.FC<Props> = ({ currentActive, setCurrentActive }) => {
   return (
     <Container>
       <Link to="/firstAssignment" style={{ textDecoration: "none" }}>

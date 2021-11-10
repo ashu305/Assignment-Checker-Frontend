@@ -10,7 +10,15 @@ import Questions from "./Questions";
 import ReactSpinner from "./ReactSpinner";
 import ResetQuiz from "./ResetQuiz";
 
-const FirstAssignment: React.FC = () => {
+interface Props {
+  currentActive: string;
+  setCurrentActive(value: string): void;
+}
+
+const FirstAssignment: React.FC<Props> = ({
+  currentActive,
+  setCurrentActive,
+}) => {
   const description = `Create an Employee database consisting of four tables namely,
   employees, works, and company, as given below, where the primary
   keys are underlined.`;
@@ -49,7 +57,10 @@ const FirstAssignment: React.FC = () => {
       {loading && <ReactSpinner />}
       {!loading && (
         <div>
-          <Navbar />
+          <Navbar
+            currentActive={currentActive}
+            setCurrentActive={setCurrentActive}
+          />
           <AssignmentDescription
             description={description}
             tableDetails={tableDetails}

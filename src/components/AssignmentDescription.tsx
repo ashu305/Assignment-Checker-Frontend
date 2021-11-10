@@ -40,8 +40,12 @@ const AssignmentDescription: React.FC<Props> = ({
             {description}
           </Typography>
           <List>
-            {tableDetails.map((table) => {
-              return <li style={{ marginTop: "8px" }}>{table}</li>;
+            {tableDetails.map((table, index) => {
+              return (
+                <li style={{ marginTop: "8px" }} key={index}>
+                  {table}
+                </li>
+              );
             })}
           </List>
         </Paper>

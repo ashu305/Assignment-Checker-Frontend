@@ -1,8 +1,38 @@
-import { Paper, TextField, Typography } from "@material-ui/core";
-import React from "react";
+import { Paper, Typography } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { checkAnswerStatue } from "../constants/enums/CheckAnswerStatus";
+import { QuestionsResponse } from "../interfaces/AssignmentQuesionsResponse";
+import { chekAnswers } from "../calls/FirstAssignmentCalls";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+interface Props {
+  user: QuestionsResponse;
+}
 
-const Questions = () => {
+const Questions: React.FC<Props> = ({ user }) => {
+  const [status, setStatus] = useState(user.userStatus);
+  const [userAnswer, setUserAnswer] = useState("");
+  const handelUserAnswerChange = (event: any) => {
+    setUserAnswer(event.target.value);
+  };
+  const handelCheckClicked = () => {
+    chekAnswers(user.id, userAnswer)
+      .then((res) => {
+        if (res.data[0].userStatus === checkAnswerStatue.APPROVED) {
+          setStatus(checkAnswerStatue.APPROVED);
+        } else if (res.data[0].userStatus === checkAnswerStatue.REJECTED) {
+          setStatus(checkAnswerStatue.REJECTED);
+        } else {
+          setStatus(checkAnswerStatue.ERROR);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <Container>
@@ -11,7 +41,7 @@ const Questions = () => {
           elevation={5}
           style={{
             width: "40rem",
-            minHeight: "11.5rem",
+            minHeight: "11.2rem",
             borderRadius: "20px",
             padding: "20px",
             boxShadow: "0 0 20px #3a3a3a",
@@ -19,14 +49,64 @@ const Questions = () => {
             flexDirection: "column",
           }}
         >
-          <Typography variant="h5">This is question 1</Typography>
+          <div style={{ float: "left" }}>
+            <Typography variant="h5">{user.question}</Typography>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "-10px",
+            }}
+          >
+            {status === checkAnswerStatue.APPROVED ? (
+              <CheckCircleIcon
+                color="success"
+                style={{ width: "fit-content" }}
+              />
+            ) : (
+              status !== checkAnswerStatue.NOT_STARTED && (
+                <CancelRoundedIcon color="error" />
+              )
+            )}
+          </div>
           <TextField
-            variant="standard"
+            variant="outlined"
             label="Enter your querry"
             type="text"
             style={{ marginTop: "20px", marginBottom: "20px" }}
+            defaultValue={user.userAnswer !== null ? user.userAnswer : ""}
+            onChange={handelUserAnswerChange}
+            color={
+              status === checkAnswerStatue.APPROVED
+                ? "success"
+                : status !== checkAnswerStatue.NOT_STARTED
+                ? "error"
+                : "primary"
+            }
+            focused={
+              status === checkAnswerStatue.APPROVED
+                ? true
+                : status !== checkAnswerStatue.NOT_STARTED
+                ? true
+                : false
+            }
+            InputProps={{
+              readOnly: status === checkAnswerStatue.APPROVED,
+            }}
           />
-          <Button>Check</Button>
+          <Button
+            onClick={handelCheckClicked}
+            disabled={status === checkAnswerStatue.APPROVED}
+            variant="contained"
+            color="primary"
+            style={{
+              borderRadius: "20px",
+              fontSize: "1rem",
+            }}
+          >
+            Check
+          </Button>
         </Paper>
       </Container>
     </div>
@@ -44,13 +124,8 @@ const Container = styled.div`
   margin-top: 50px;
   margin-bottom: 30px;
 `;
-const List = styled.ol`
-  margin-left: -22px;
-  font-size: large;
-  font-family: sans-serif;
-`;
 
-const Button = styled.button`
+const StyledButton = styled.button`
   background: orange;
   width: 200px;
   margin: auto;
@@ -72,4 +147,9 @@ const Button = styled.button`
   }
 `;
 
+const Section = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 export default Questions;

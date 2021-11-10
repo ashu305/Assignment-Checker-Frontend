@@ -64,6 +64,7 @@ const Container = styled.nav`
   position: absolute;
   background: #0000007d;
   margin: 0;
+  top: 0;
   height: 80px;
   display: flex;
   justify-content: space-between;

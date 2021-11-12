@@ -1,6 +1,10 @@
-# This is the UI of the Full Stack Assignment checker web application using react, node, express and MySql
+# Assignment-Checker-Frontend
 
-### This is a simple web application where you can check your answers for the corresponding question givin by the dbms faculty!!
+This is the UI of the Full Stack Assignment checker web application using react, node, express and MySql
 
-### You can clone the project and use  `npm start` to see the application in action
+This is a simple web application where you can check your answers for the corresponding question givin by the dbms faculty!!
+
+### use  `npm start`
+
+You can clone the project and  to see the application in action
 

@@ -1,7 +1,6 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
-import AssignmentDescription from "./AssignmentDescription";
 import Navbar from "./Navbar";
 
 interface Props {
@@ -21,7 +20,7 @@ const SecondAssignment: React.FC<Props> = ({
         setCurrentActive={setCurrentActive}
       />
       <Container>
-        <Typography variant="h3">COMMING SOON!! BE READY!!</Typography>
+        <Typography variant="h3">{description}</Typography>
       </Container>
     </>
   );

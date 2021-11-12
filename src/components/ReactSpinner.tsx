@@ -1,14 +1,6 @@
 import React from "react";
 import { ClipLoader } from "react-spinners";
-import { css } from "@emotion/react";
 import styled from "styled-components";
-
-const loaderCSS = css`
-  display: flex;
-  position: relative;
-  margin: auto;
-  top: 300px;
-`;
 
 const ReactSpinner = () => {
   return (

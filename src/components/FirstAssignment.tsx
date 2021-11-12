@@ -46,7 +46,11 @@ const FirstAssignment: React.FC<Props> = ({
   const handelFirstAssignmentResetClicked = () => {
     resetFirstAssignment()
       .then((res) => {
-        console.log("RESET Sccessful!!!");
+        setLoading(true);
+        getFirstAssignmentQuestions().then((res) => {
+          setQuestions(res.data);
+          setLoading(false);
+        });
       })
       .catch((err) => {
         console.log(err);

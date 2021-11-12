@@ -19,13 +19,12 @@ const Questions: React.FC<Props> = ({ user }) => {
     setUserAnswer(event.target.value);
   };
   const handelCheckClicked = () => {
-    console.log(user.id, userAnswer);
-
     chekAnswers(user.id, userAnswer)
       .then((res) => {
-        if (res.data[0].userStatus === checkAnswerStatue.APPROVED) {
+        const currentStatus = res.data.status[0].userStatus;
+        if (currentStatus === checkAnswerStatue.APPROVED) {
           setStatus(checkAnswerStatue.APPROVED);
-        } else if (res.data[0].userStatus === checkAnswerStatue.REJECTED) {
+        } else if (currentStatus === checkAnswerStatue.REJECTED) {
           setStatus(checkAnswerStatue.REJECTED);
         } else {
           setStatus(checkAnswerStatue.ERROR);
@@ -127,31 +126,4 @@ const Container = styled.div`
   margin-bottom: 30px;
 `;
 
-const StyledButton = styled.button`
-  background: orange;
-  width: 200px;
-  margin: auto;
-  border-radius: 20px;
-  border: none;
-  font-size: 1.5rem;
-  height: 40px;
-  color: #fff;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  box-shadow: 0 2px 10px orange;
-
-  &:hover {
-    transform: scale(1.02);
-    background: #0d7ae0;
-    font-weight: bolder;
-    box-shadow: 0 2px 10px #0dd2e0;
-  }
-`;
-
-const Section = styled.section`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 export default Questions;

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://stupefied-kalam-472325.netlify.app",
+  baseURL: "http://localhost:3001",
   timeout: 10000,
 });
 export default client;

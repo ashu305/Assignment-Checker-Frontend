@@ -6,5 +6,5 @@ This is a simple web application where you can check your answers for the corres
 
 # use  `npm start`
 
-You can clone the project and  to see the application in action
+You can clone the project and  to see the application in action by typing npm start in the terminal
 

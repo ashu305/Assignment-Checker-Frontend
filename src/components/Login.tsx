@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <Container>
       <Link to="/firstAssignment">
-        <Button>Start Quiz</Button>
+        <Button>Start Assignment</Button>
       </Link>
     </Container>
   );

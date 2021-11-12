@@ -4,7 +4,7 @@ This is the UI of the Full Stack Assignment checker web application using react,
 
 This is a simple web application where you can check your answers for the corresponding question givin by the dbms faculty!!
 
-# use  `npm start`
-
-You can clone the project and  to see the application in action by typing npm start in the terminal
-
+# Want to see the app in action
+- clone the project to your local machine.
+- use  `npm install` to install the required dependencies
+- use  `npm start` to to see the app in action

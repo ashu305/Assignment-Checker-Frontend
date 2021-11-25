@@ -5,21 +5,21 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { checkAnswerStatue } from "../constants/enums/CheckAnswerStatus";
 import { QuestionsResponse } from "../interfaces/AssignmentQuesionsResponse";
-import { chekAnswers } from "../calls/FirstAssignmentCalls";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 interface Props {
   user: QuestionsResponse;
+  checkAnswers(id: number, userAnswer: string): Promise<any>;
 }
 
-const Questions: React.FC<Props> = ({ user }) => {
+const Questions: React.FC<Props> = ({ user, checkAnswers }) => {
   const [status, setStatus] = useState(user.userStatus);
   const [userAnswer, setUserAnswer] = useState("");
   const handelUserAnswerChange = (event: any) => {
     setUserAnswer(event.target.value);
   };
   const handelCheckClicked = () => {
-    chekAnswers(user.id, userAnswer)
+    checkAnswers(user.id, userAnswer)
       .then((res) => {
         const currentStatus = res.data.status[0].userStatus;
         if (currentStatus === checkAnswerStatue.APPROVED) {
@@ -58,13 +58,13 @@ const Questions: React.FC<Props> = ({ user }) => {
               display: "flex",
               justifyContent: "flex-end",
               marginTop: "-10px",
+              alignItems: "flex-end",
+              alignContent: "flex-end",
+              flexDirection: "row",
             }}
           >
             {status === checkAnswerStatue.APPROVED ? (
-              <CheckCircleIcon
-                color="success"
-                style={{ width: "fit-content" }}
-              />
+              <CheckCircleIcon color="success" style={{ maxWidth: "50px" }} />
             ) : (
               status !== checkAnswerStatue.NOT_STARTED && (
                 <CancelRoundedIcon color="error" />

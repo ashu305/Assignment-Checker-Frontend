@@ -1,7 +1,19 @@
-import { Typography } from "@material-ui/core";
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import { chekAnswers } from "../calls/SecondAssignmentCalls";
+import {
+  getSecondAssignmentQuestions,
+  resetSecondAssignment,
+} from "../calls/SecondAssignmentCalls";
+import {
+  secondAssignmentDescription,
+  secondAssignmentTableDetails,
+} from "../constants/QuestionDetails";
+import { QuestionsResponse } from "../interfaces/AssignmentQuesionsResponse";
+import AssignmentDescription from "./AssignmentDescription";
 import Navbar from "./Navbar";
+import Questions from "./Questions";
+import ReactSpinner from "./ReactSpinner";
+import ResetQuiz from "./ResetQuiz";
 
 interface Props {
   currentActive: string;
@@ -12,30 +24,63 @@ const SecondAssignment: React.FC<Props> = ({
   currentActive,
   setCurrentActive,
 }) => {
-  const description = "COMMING SOON!!! BE READY!!";
+  const [questions, setQuestions] = useState<Array<QuestionsResponse>>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getSecondAssignmentQuestions()
+      .then((res) => {
+        setQuestions(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handelSecondAssignmentResetClicked = () => {
+    resetSecondAssignment()
+      .then((res) => {
+        setLoading(true);
+        getSecondAssignmentQuestions().then((res) => {
+          setQuestions(res.data);
+          setLoading(false);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
-      <Navbar
-        currentActive={currentActive}
-        setCurrentActive={setCurrentActive}
-      />
-      <Container>
-        <Typography variant="h3">{description}</Typography>
-      </Container>
+      {loading && <ReactSpinner />}
+      {!loading && (
+        <div>
+          <Navbar
+            currentActive={currentActive}
+            setCurrentActive={setCurrentActive}
+          />
+          <AssignmentDescription
+            description={secondAssignmentDescription}
+            tableDetails={secondAssignmentTableDetails}
+          />
+          {questions.length !== 0 &&
+            questions.map((question) => {
+              return (
+                <Questions
+                  key={question.id}
+                  user={question}
+                  checkAnswers={chekAnswers}
+                />
+              );
+            })}
+          <ResetQuiz handelResetClicked={handelSecondAssignmentResetClicked} />
+        </div>
+      )}
     </>
   );
 };
 
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 400px;
-  margin-left: 50%;
-  margin-right: auto;
-  width: 100%;
-  background: white;
-  border-radius: 20px;
-`;
 export default SecondAssignment;

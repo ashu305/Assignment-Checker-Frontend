@@ -9,7 +9,11 @@ import Navbar from "./Navbar";
 import Questions from "./Questions";
 import ReactSpinner from "./ReactSpinner";
 import ResetQuiz from "./ResetQuiz";
-
+import {
+  firstAssignmentDescription,
+  firstAssignmentTableDetails,
+} from "../constants/QuestionDetails";
+import { chekAnswers } from "../calls/FirstAssignmentCalls";
 interface Props {
   currentActive: string;
   setCurrentActive(value: string): void;
@@ -19,14 +23,6 @@ const FirstAssignment: React.FC<Props> = ({
   currentActive,
   setCurrentActive,
 }) => {
-  const description = `Create an Employee database consisting of four tables namely,
-  employees, works, and company, as given below, where the primary
-  keys are underlined.`;
-  const tableDetails = [
-    `employee (employee_id, employee_name, street, city)`,
-    `works(employee_id, company_name, salary)`,
-    `company(company_name, city): Name and location of the comany`,
-  ];
   const [questions, setQuestions] = useState<Array<QuestionsResponse>>([]);
   const [loading, setLoading] = useState(false);
 
@@ -66,12 +62,18 @@ const FirstAssignment: React.FC<Props> = ({
             setCurrentActive={setCurrentActive}
           />
           <AssignmentDescription
-            description={description}
-            tableDetails={tableDetails}
+            description={firstAssignmentDescription}
+            tableDetails={firstAssignmentTableDetails}
           />
           {questions.length !== 0 &&
             questions.map((question) => {
-              return <Questions key={question.id} user={question} />;
+              return (
+                <Questions
+                  key={question.id}
+                  user={question}
+                  checkAnswers={chekAnswers}
+                />
+              );
             })}
           <ResetQuiz handelResetClicked={handelFirstAssignmentResetClicked} />
         </div>

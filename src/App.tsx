@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import FirstAssignment from "./components/FirstAssignment";
 import SecondAssignment from "./components/SecondAssignment";
+import ThirdAssignment from "./components/ThirdAssignment";
 
 const App = () => {
   const [currentActive, setCurrentActive] = useState("Assignment 1");
@@ -33,7 +34,7 @@ const App = () => {
           <Route
             path="/thirdAssignment"
             element={
-              <SecondAssignment
+              <ThirdAssignment
                 currentActive={currentActive}
                 setCurrentActive={setCurrentActive}
               />
@@ -42,7 +43,7 @@ const App = () => {
           <Route
             path="/fourthAssignment"
             element={
-              <SecondAssignment
+              <ThirdAssignment
                 currentActive={currentActive}
                 setCurrentActive={setCurrentActive}
               />
